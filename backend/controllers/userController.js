@@ -1,5 +1,5 @@
 const zod = require("zod");
-const { User } = require("../db");
+const { User, Account } = require("../db");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "my-name-navin-kumar-this-is-secret-key"
 
@@ -31,24 +31,39 @@ exports.signup = async (req, res) => {
             message: "Email already taken/Incorrect inputs"
         })
     }
+    try {
+        const user = await User.create({
+            username: req.body.username,
+            password: req.body.password,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+        })
+        const userId = user._id;
 
-    const user = await User.create({
-        username: req.body.username,
-        password: req.body.password,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-    })
-    const userId = user._id;
+        // creating account of user
 
-    const token = jwt.sign({
-        userId
-    }, JWT_SECRET);
+        const account = await Account.create({
+            userId: userId,
+            balance: 1 + Math.random() * 10000
+        })
+        console.log('account', account);
 
-    res.json({
-        message: "User created successfully",
-        token: token
-    })
+
+        const token = jwt.sign({
+            userId
+        }, JWT_SECRET);
+
+        res.json({
+            message: "User created successfully",
+            token: token
+        })
+    } catch (error) {
+        console.error("Error creating user or account:", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+
 }
+
 
 
 exports.signin = async (req, res) => {
