@@ -8,4 +8,6 @@ router.post("/signup", userController.signup)
 router.post("/signin", userController.signin)
 
 router.put('/', authMiddleware, userController.updateMe)
+
+router.get('/bulk', userController.getUsers)
 module.exports = router;
