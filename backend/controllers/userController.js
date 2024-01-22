@@ -1,7 +1,7 @@
 const zod = require("zod");
 const { User } = require("../db");
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = process.env.JWT_SECRET
+const JWT_SECRET = "my-name-navin-kumar-this-is-secret-key"
 
 const signupBody = zod.object({
     username: zod.string().email(),
@@ -50,6 +50,7 @@ exports.signup = async (req, res) => {
     })
 }
 
+
 exports.signin = async (req, res) => {
     const { success } = signinBody.safeParse(req.body)
     if (!success) {
@@ -77,5 +78,29 @@ exports.signin = async (req, res) => {
 
     res.status(411).json({
         message: "Error while logging in"
+    })
+}
+const updateBody = zod.object({
+    firstName: zod.string().optional(),
+    lastName: zod.string().optional(),
+    password: zod.string().optional()
+})
+
+exports.updateMe = async (req, res) => {
+    const { success } = updateBody.safeParse(req.body)
+    if (!success) {
+        res.status(411).json({
+            message: "Error while updating information"
+        })
+    }
+    const updatedUser = await User.updateOne({ _id: req.userId }, req.body)
+    if (!updatedUser) {
+        return (
+            res.json({
+                message: "Something went wrong"
+            }))
+    }
+    res.json({
+        message: "Updated successfully"
     })
 }
