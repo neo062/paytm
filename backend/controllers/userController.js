@@ -121,11 +121,6 @@ exports.getUsers = async (req, res) => {
     })
 
     res.json({
-        user: users.map(user => ({
-            username: user.username,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            _id: user._id
-        }))
+        users
     })
 }
