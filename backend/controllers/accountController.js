@@ -25,9 +25,14 @@ exports.moneyTransfer = async (req, res) => {
                 message: "Inficient Balance"
             })
         }
-
+        if (to == req.userId) {
+            await session.abortTransaction();
+            return res.status(400).json({
+                message: "Invalid Account"
+            })
+        }
         const toAccount = await Account.findOne({ userId: to }).session(session)
-        if (!toAccount || to == toAccount._id) {
+        if (!toAccount) {
             await session.abortTransaction();
             return res.status(400).json({
                 message: "Invalid Account"
