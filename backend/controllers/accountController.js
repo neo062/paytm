@@ -27,7 +27,7 @@ exports.moneyTransfer = async (req, res) => {
         }
 
         const toAccount = await Account.findOne({ userId: to }).session(session)
-        if (!toAccount) {
+        if (!toAccount || to == toAccount._id) {
             await session.abortTransaction();
             return res.status(400).json({
                 message: "Invalid Account"
