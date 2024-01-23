@@ -35,6 +35,7 @@ const Signup = () => {
             } else {
                 setForm({})
                 toast.success(data.message)
+                localStorage.setItem('user-session-token', data.token)
                 navigate('/dashboard')
             }
         } catch (err) {
