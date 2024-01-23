@@ -1,7 +1,11 @@
-
+import ShowBalance from "./ShowBalance"
+import UserList from "./UserList"
 const Dashboard = () => {
     return (
-        <div>Dashboard</div>
+        <div className="p-5">
+            <ShowBalance />
+            <UserList />
+        </div>
     )
 }
 
