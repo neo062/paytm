@@ -1,7 +1,10 @@
 import { useState } from "react"
+import { moneyTransferModal } from "../state/moneyTransfer"
+import { useSetRecoilState } from "recoil"
 import toast from "react-hot-toast"
-const MoneyTransferModal = ({ isClicked, setClicked, _id, to, name }) => {
-    const [amount, setAmount] = useState(0)
+const MoneyTransferModal = ({ isClicked, setClicked, _id, name, to }) => {
+    const setIsModalClicked = useSetRecoilState(moneyTransferModal)
+    const [amount, setAmount] = useState()
     const [isPending, setIsPending] = useState(false)
     const handleMoneyTransfer = async (e) => {
         const token = localStorage.getItem('user-session-token')
@@ -9,6 +12,7 @@ const MoneyTransferModal = ({ isClicked, setClicked, _id, to, name }) => {
             amount: amount,
             to: to
         }
+        console.log(reqBody);
         try {
             setIsPending(true)
             const apiUrl = `${import.meta.env.VITE_BASE_URL}/api/v1/account/transfer`
@@ -32,11 +36,13 @@ const MoneyTransferModal = ({ isClicked, setClicked, _id, to, name }) => {
         } finally {
             setIsPending(false)
             setClicked(false)
+            setIsModalClicked(pre => !pre)
         }
 
     }
 
     if (!isClicked) return null;
+
     return (
         <div className="fixed inset-0 bg-white z-20 flex justify-center items-center" >
             <div className="w-96 bg-white shadow-md rounded-lg border p-5 relative" >

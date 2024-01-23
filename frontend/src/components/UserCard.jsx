@@ -1,8 +1,12 @@
-import { useRecoilState } from 'recoil'
-import { moneyTransferModal } from '../state/moneyTransfer'
+
 import MoneyTransferModal from './MoneyTransferModal'
+import { moneyTransferModal } from "../state/moneyTransfer"
+import { useSetRecoilState } from 'recoil'
+import { useState } from 'react'
 const UserCard = ({ data, index }) => {
-    const [isClicked, setClicked] = useRecoilState(moneyTransferModal)
+    const setIsModalClicked = useSetRecoilState(moneyTransferModal)
+
+    const [isClicked, setClicked] = useState(false)
     const { _id, firstName, lastName } = data
     const fullName = firstName + " " + lastName;
     return (
@@ -16,10 +20,14 @@ const UserCard = ({ data, index }) => {
                     <span className='ml-2'>{fullName}</span>
                 </div>
 
-                <button onClick={() => setClicked(true)} type='button' className='py-2 px-4 rounded-lg bg-black text-white'>
+                <button onClick={() => {
+                    setIsModalClicked(true)
+                    setClicked(true)
+                }} type='button' className='py-2 px-4 rounded-lg bg-black text-white'>
                     Send Money
                 </button>
             </div>
+
             <MoneyTransferModal isClicked={isClicked} setClicked={setClicked} name={fullName} to={_id} />
         </>
     )
