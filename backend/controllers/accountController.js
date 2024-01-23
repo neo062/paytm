@@ -25,7 +25,7 @@ exports.moneyTransfer = async (req, res) => {
                 message: "Inficient Balance"
             })
         }
-        if (to == req.userId) {
+        if (to === req.userId) {
             await session.abortTransaction();
             return res.status(400).json({
                 message: "Invalid Account"
