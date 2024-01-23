@@ -44,7 +44,7 @@ const MoneyTransferModal = ({ isClicked, setClicked, _id, name, to }) => {
     if (!isClicked) return null;
 
     return (
-        <div className="fixed inset-0 bg-white z-20 flex justify-center items-center" >
+        <div className="fixed inset-0 bg-black bg-opacity-20 z-20 flex justify-center items-center" >
             <div className="w-96 bg-white shadow-md rounded-lg border p-5 relative" >
                 <h1 className="text-3xl font-medium mb-10 text-center"> Send Money</h1>
 
