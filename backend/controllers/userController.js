@@ -124,16 +124,21 @@ exports.getUsers = async (req, res) => {
     const filter = req.query.filter || "";
 
     const users = await User.find({
-        $or: [{
-            firstName: {
-                "$regex": filter
+        $or: [
+            {
+                firstName: {
+                    "$regex": filter,
+                    "$options": "i" // "i" stands for case-insensitive
+                }
+            },
+            {
+                lastName: {
+                    "$regex": filter,
+                    "$options": "i" // "i" stands for case-insensitive
+                }
             }
-        }, {
-            lastName: {
-                "$regex": filter
-            }
-        }]
-    })
+        ]
+    });
 
     res.json({
         users
