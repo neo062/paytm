@@ -1,7 +1,7 @@
 import { useState } from "react"
 import toast from "react-hot-toast"
 const MoneyTransferModal = ({ isClicked, setClicked, _id, to, name }) => {
-    const [amount, setAmount] = useState()
+    const [amount, setAmount] = useState(0)
     const [isPending, setIsPending] = useState(false)
     const handleMoneyTransfer = async (e) => {
         const token = localStorage.getItem('user-session-token')

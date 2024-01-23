@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import { useRecoilState } from 'recoil'
+import { moneyTransferModal } from '../state/moneyTransfer'
 import MoneyTransferModal from './MoneyTransferModal'
 const UserCard = ({ data, index }) => {
-    const [isClicked, setClicked] = useState(false)
+    const [isClicked, setClicked] = useRecoilState(moneyTransferModal)
     const { _id, firstName, lastName } = data
     const fullName = firstName + " " + lastName;
     return (
