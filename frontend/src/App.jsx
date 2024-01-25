@@ -6,6 +6,7 @@ import Signin from './components/Signin';
 import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
 import Navbar from './components/Navbar';
+import Hero from './components/Hero';
 export default function App() {
   return (
     <>
@@ -14,7 +15,7 @@ export default function App() {
           <Toaster />
           <Navbar />
           <Routes>
-            <Route path='/' element={<h1>Hii there</h1>} />
+            <Route path='/' element={<Hero />} />
             <Route path='/signup' element={<Signup />} />
             <Route path='/signin' element={<Signin />} />
             <Route path='/dashboard' element={<Dashboard />} />
